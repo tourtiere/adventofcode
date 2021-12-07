@@ -7,7 +7,7 @@ def fuel(position, idx):
     # return n
 
     # problem b
-    return n * (n+1) / 2
+    return n * (n+1) // 2
 
 
 m = min([
