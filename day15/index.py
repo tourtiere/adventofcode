@@ -1,4 +1,3 @@
-
 with open("./15.in") as f:
 
     lines = f.read().split("\n")[:-1]
@@ -25,17 +24,31 @@ with open("./15.in") as f:
 
 def dijkstra():
 
-    Q = list(data.keys())
+    Q = set(data.keys())
 
     dist = {i: float("inf") for i in Q}
-    prev: dict[tuple[int, int], tuple[int, int]] = {i: (0, 0) for i in Q}
     dist[(0, 0)] = 0
 
-    while len(Q) != 0:
-        print(len(Q))
+    prev: dict[tuple[int, int], tuple[int, int]] = {i: (0, 0) for i in Q}
 
-        Q.sort(key=lambda u: dist[u], reverse=True)
-        u = Q.pop()
+    leaves = {(0, 0)}
+
+    count = 0
+    len_Q = len(Q)
+
+    while len(Q) != 0:
+
+        count += 1
+        if (count % 1000 == 0):
+            print(count / len_Q)
+
+        u, value = (0, 0), float("inf")
+        for leaf in leaves:
+            if dist[leaf] < value:
+                u, value = leaf, dist[leaf]
+
+        leaves.remove(u)
+        Q.remove(u)
 
         neighbors: list[tuple[int, int]] = [
             (u[0] + x, u[1] + y) for x, y in [(0, 1), (0, -1), (-1, 0), (1, 0)]
@@ -45,6 +58,7 @@ def dijkstra():
             if v in Q:
                 alt = dist[u] + data[v]
                 if alt < dist[v]:
+                    leaves.add(v)
                     dist[v] = alt
                     prev[v] = u
 
