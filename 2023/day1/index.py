@@ -1,7 +1,7 @@
 with open("./data.txt") as f:
     lines = f.readlines()
     chiffres = '0123456789'
-    lettres = ["zero", "one", "two", "three", "four", "five","six", "seven", "eight", "nine"]
+    lettres = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     s1 = 0
     s2 = 0
     for line in lines:
@@ -20,11 +20,7 @@ with open("./data.txt") as f:
                 if (len(subline) >= len(lettres[j])):
                     if (subline[:len(lettres[j])] == lettres[j]):
                         line_chiffres.append(j)
-                        
         a, b = int(line_chiffres[0]), int(line_chiffres[-1])
         s2 += a * 10 + b
-
     print(s1)
     print(s2)
-
-
