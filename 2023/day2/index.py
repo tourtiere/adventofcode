@@ -34,7 +34,7 @@ with open("./data.txt") as f:
 
         if valid:
             s1 += int(id)
-        power = max_colors["red"] * max_colors['green'] * max_colors['blue']
+        power = min_colors["red"] * min_colors['green'] * min_colors['blue']
         s2 += power
 
     print(s1)
