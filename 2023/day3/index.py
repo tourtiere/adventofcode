@@ -18,7 +18,7 @@ with open("./data.txt") as f:
     grid = { (i, j):c for j,line in enumerate(lines) for i,c in enumerate(line)}
     s1 = 0
 
-    gears = {k:[] for k, v in grid.items()}
+    gears = {k:[] for k in grid}
 
     for j, line in enumerate(lines):
         number = ""
@@ -33,8 +33,7 @@ with open("./data.txt") as f:
                     neighbors += [(i+1, j), (i - len(number), j)]
                     values = [grid.get(n) for n in neighbors] 
                     seul = all([v is None or v == "." for v in values ])
-                    print(seul, number)
-                    #if all():
+                    
                     if not seul:
                         s1 +=int(number)
 
@@ -47,3 +46,5 @@ with open("./data.txt") as f:
     gear_ratios = sum([gears[g][0]*gears[g][1] for g in gears if len(gears[g]) ==2])
     print(s1)
     print(gear_ratios)
+
+    
