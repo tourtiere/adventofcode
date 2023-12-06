@@ -1,16 +1,23 @@
-times = [44, 89, 96, 91]
-distances = [277, 1136, 1890, 1768]
+def roots_quadratic(a,b,c):
+    d = (b**2-4*a*c)**0.5
+    return ((-b + d )/ (2*a), (-b - d )/ (2*a))
 
-# times = [7,15,30]
-# distances = [9, 40, 200]
+def fn(time, distance):
+    a, b = roots_quadratic(-1, time, -distance)
+    count = (int(b) - int(a))
+    return count
 
-results = []
+with open("./data.txt") as f:
+    content = f.read() 
+    lines = content.split("\n")
+    times = lines[0].split()[1:]
+    distances = lines[1].split()[1:]
 
-for time, dist in zip(times, distances):
-    count = 0
-    for speed in range(time):
-        if speed * (time - speed) > dist:
-            count += 1
-    results.append(count)
+    part1 = 1
+    for time, distance in zip(times, distances):
+        part1 *= fn(int(time), int(distance))
+    print(part1)
 
-# x * time - x^2 = distance
+    time = int("".join(times))
+    distance = int("".join(distances))
+    print(fn(time,distance))
