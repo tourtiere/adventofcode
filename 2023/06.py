@@ -2,7 +2,7 @@ def roots_quadratic(a,b,c):
     d = (b**2-4*a*c)**0.5
     return ((-b + d )/ (2*a), (-b - d )/ (2*a))
 
-def fn(time, distance):
+def fn(time:float, distance) :
     a, b = roots_quadratic(-1, time, -distance)
     count = (int(b) - int(a))
     return count
