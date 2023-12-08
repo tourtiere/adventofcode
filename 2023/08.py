@@ -1,27 +1,34 @@
-from os import DirEntry
+import math
+import re
 
+Matches = dict[str, list[str]]
 
-content = '''LLR
+def fn(matches:Matches, directions: str, init_step:int, init_value:str, part2:bool):
+    steps = init_step
+    value = init_value
+    while True:
+        direction = directions[steps % len(directions)]
+        if direction == "L":
+            value = matches[value][0]
+        else:
+            value = matches[value][1]
+        steps +=1
 
-AAA = (BBB, BBB)
-BBB = (AAA, ZZZ)
-ZZZ = (ZZZ, ZZZ)'''
+        if (not part2 and value =="ZZZ"):
+            return steps
+        if (part2 and value[2] =="Z"):
+            return steps
 
 with open("./data.txt") as f:
-
     content = f.read().split("\n\n")
-    #content = content.split("\n\n")
     directions = content[0] 
     lines = content[1].split("\n")
-    lines = [[l[:3],l[7:10], l[12:15]]for l in lines]
+    lines = [re.findall(r"\w+",l) for l in lines]
     M = {line[0] : line[1:] for line in lines}
 
-    value = "AAA"
-    i = 0
-
-    for j in range(10):
-        counter = 0
-        while (value := M[value][directions[i % len(directions)] == "R"])  != "ZZZ":
-            i+=1
-            counter +=1
-        print(i % len(directions), counter)
+    steps = fn(M, directions, 0, "AAA", False)
+    print(steps)
+    
+    nodes =[node for node in M if node[2] == "A" ]
+    steps = [fn(M, directions, 0, node, True)  for node in nodes]
+    print(math.lcm(*steps))
