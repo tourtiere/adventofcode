@@ -5,8 +5,8 @@ with open("./data.txt") as f:
     part2 = 0
     for line in lines:
         nums = [int(i) for i in line.split()]
-        pyramid = [[n for n in nums]]
-
+        pyramid = [nums]
+        
         while any([n != 0 for n in pyramid[-1]]) :
             base = pyramid[-1]
             row = [b - a for a, b in zip(base, base[1:])]
