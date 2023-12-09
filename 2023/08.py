@@ -3,8 +3,8 @@ import re
 
 Matches = dict[str, list[str]]
 
-def fn(matches:Matches, directions: str, init_step:int, init_value:str, part2:bool):
-    steps = init_step
+def fn(matches:Matches, directions: str, init_value:str, part2:bool):
+    steps = 0
     value = init_value
     while True:
         direction = directions[steps % len(directions)]
@@ -26,9 +26,10 @@ with open("./data.txt") as f:
     lines = [re.findall(r"\w+",l) for l in lines]
     M = {line[0] : line[1:] for line in lines}
 
-    steps = fn(M, directions, 0, "AAA", False)
+    steps = fn(M, directions,  "AAA", False)
     print(steps)
     
     nodes =[node for node in M if node[2] == "A" ]
-    steps = [fn(M, directions, 0, node, True)  for node in nodes]
+    steps = [fn(M, directions, node, True)  for node in nodes]
+    print(steps)
     print(math.lcm(*steps))
