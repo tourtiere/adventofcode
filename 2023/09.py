@@ -11,17 +11,14 @@ with open("./data.txt") as f:
             row = [b - a for a, b in zip(pyramid[-1], pyramid[-1][1:] )]
             pyramid.append(row)
 
-        firsts = [row[0] for row in pyramid]
-        lasts = [row[-1] for row in pyramid]
-
-        first_first = 0
-        last_last = 0
-        for first, last in zip(reversed(firsts), reversed(lasts)):
-            first_first = first - first_first
-            last_last = last + last_last
-
-        part1 += last_last
-        part2 += first_first
+        first = 0
+        last = 0
+        for row in reversed(pyramid):
+            first = row[0] - first
+            last = row[-1] + last
+            
+        part1 += last
+        part2 += first
 
     print(part1)
     print(part2)
