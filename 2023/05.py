@@ -1,6 +1,6 @@
 def range_inter(r1, r2):
     return [ (a,b) for a,b in  [[max(r1[0], r2[0]), min(r1[1],r2[1])]] if a < b ]
-
+    
 def range_diff(r1, r2):
     return [ (a,b) for a,b in  [ [r1[0], r2[0]], [r2[1], r1[1]]] if a < b ]
 

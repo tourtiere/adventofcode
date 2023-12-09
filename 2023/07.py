@@ -3,19 +3,19 @@ from collections import defaultdict
 
 def get_score(hand, part2=False):
 
-    m = defaultdict(int)
+    S = defaultdict(int)
     for i in hand:
-        m[i] += 1
+        S[i] += 1
 
     card_order="23456789TJQKA"
-
-    v = sorted(m.values())
+    
+    v = sorted(S.values())
 
     if part2:
         card_order="J23456789TQKA"
-        n = m["J"]
-        m["J"] = 0
-        v = sorted(m.values())
+        n = S["J"]
+        S["J"] = 0
+        v = sorted(S.values())
         v[-1] += n
 
     score = 0
@@ -44,10 +44,10 @@ with open("./data.txt") as f:
     hands = [line.split() for line in lines]
 
     hands = sorted(hands, key=lambda hand: get_score(hand[0], False))
-    bids = [(i +1) * int(bid) for i, (_,bid) in enumerate(hands)]
+    bids = [(i + 1) * int(bid) for i, (_,bid) in enumerate(hands)]
     print(sum(bids))
 
     hands = sorted(hands, key=lambda hand: get_score(hand[0], True))
-    bids = [(i +1) * int(bid) for i, (_,bid) in enumerate(hands)]
+    bids = [(i + 1) * int(bid) for i, (_,bid) in enumerate(hands)]
     print(sum(bids))
 

@@ -7,8 +7,9 @@ with open("./data.txt") as f:
         nums = [int(i) for i in line.split()]
         pyramid = [[n for n in nums]]
 
-        while not all([n ==0 for n in pyramid[-1]]) :
-            row = [b - a for a, b in zip(pyramid[-1], pyramid[-1][1:] )]
+        while any([n != 0 for n in pyramid[-1]]) :
+            base = pyramid[-1]
+            row = [b - a for a, b in zip(base, base[1:])]
             pyramid.append(row)
 
         first = 0
