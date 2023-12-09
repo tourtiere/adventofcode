@@ -9,28 +9,24 @@ with open("./data.txt") as f:
     part1 = 0
     part2 = 0
     for line in lines:
-        ns = [int(i) for i in line.split()]
-        diff = [n for n in ns]
-        lasts = [diff[-1]]
-        firsts = [diff[0]]
-        while not all([n ==0 for n in diff]) :
-            diff = [b - a for a,b in zip(diff, diff[1:] )]
-            lasts.append(diff[-1])
-            firsts.append(diff[0])
-            
-        prev = 0
-        hidden = []
-        for last in reversed(lasts):
-            hidden.append(last + prev) 
-            prev = hidden[-1]
-        part1 += prev
+        nums = [int(i) for i in line.split()]
+        pyramid = [[n for n in nums]]
 
-        prev = 0
-        hidden = []
-        for first in reversed(firsts):
-            hidden.append(first - prev) 
-            prev = hidden[-1]
-        part2 += prev
+        while not all([n ==0 for n in pyramid[-1]]) :
+            row = [b - a for a, b in zip(pyramid[-1], pyramid[-1][1:] )]
+            pyramid.append(row)
+
+        firsts = [row[0] for row in pyramid]
+        lasts = [row[-1] for row in pyramid]
+
+        first_first = 0
+        last_last = 0
+        for first, last in zip(reversed(firsts), reversed(lasts)):
+            first_first = first - first_first
+            last_last = last + last_last
+
+        part1 += last_last
+        part2 += first_first
 
     print(part1)
     print(part2)
