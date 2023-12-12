@@ -1,122 +1,73 @@
-from itertools import combinations
-'''
 
-branches = [1]
-branch_idx = [0]
+content = open("./data.txt").read()
 
-for each branch
-    on ??? sequence, get all possible solutions for next ??, considering following ?? sequence
-    find all possible matching indexes set, create branch for them
-    multiply possible match to branch
-    create 
-'''
+cache:dict[str,int] = {}
 
-content = '''???.### 1,1,3
-.??..??...?##. 1,1,3
-?#?#?#?#?#?#?#? 1,3,1,6
-????.#...#... 4,1,1
-????.######..#####. 1,6,5
-?###???????? 3,2,1'''
+def get_hash(line:str, nums:list[int], past:str):
+    return line + "-" + ",".join([str(i) for i in nums]) + "-" + past
 
-#content = open("./data.txt").read()
+def save(h, count):
+    global cache
+    cache[h] = count
 
-def get_count(s:str, nums):
-    count = 0
-    unkowns = [i for i, c in enumerate(s) if c == "?"]
-    already_count = sum([i == "#" for i in s])
-    total = sum(nums)
-    remaining = total - already_count
-    count = 0
-    for indexes in combinations(unkowns, remaining):
-        test_line = list(s)
-        for i in unkowns:
-            test_line[i] = "."
-        for i in indexes:
-            test_line[i] = "#"
+def get_cached(h ) -> int | None:
+    return cache.get(h)
 
-        dist = []
-        for i in "".join(test_line).split("."):
-            if i != "":
-                dist.append(len(i))
-        if dist == nums:
-            count +=1
+def get_count(line:str, nums:list[int], past="."):
 
-    return count
-
-import math
-
-def get_permute_nums(reps,nums):
-    if len(nums) == 0:
-        return 1
-    n = reps
-    n -= len(nums) - 1
-    n -= sum(nums) - len(nums)
-    k = len(nums)
-    if n < 0:
-        return 0
-    return math.comb(n, k)
-
-def get_count2(line:str, nums:list[int], count:int, past="."):
-
+    cached = get_cached(get_hash(line, nums, past))
+    if cached is not None:
+        return cached
+        
     if len(line) == 0 or len(nums)==0:
-        if len(nums) == 0 and len(nums)==0:
-            return count
+        if len(nums) ==0 and "#" not in line:
+            return 1
+        if len(line) == 0 and len(nums)==0:
+            return 1
         return 0
 
     if line[0] == ".":
-        return get_count2(line[1:], nums, count, ".")
+        return get_count(line[1:], nums, ".")
 
     if line[0] == "#":
         if past == "#":
             return 0
-        reps = min(nums[0], len(line))
+        reps = nums[0]
         for i in range(reps):
+            if i >= len(line):
+                return 0
             if line[i] == ".":
                 return 0
-        return get_count2(line[reps:], nums[1:], count, "#")
+        return get_count(line[reps:], nums[1:], "#")
 
     if line[0] == "?":
         if past == "#":
-            return get_count2(line[1:], nums, count, ".")
+            return get_count(line[1:], nums, ".")
+        line_a = "." + line[1:]
+        line_b = "#" + line[1:]
+        a = get_count(line_a, nums, past)
+        b = get_count(line_b, nums, past)
+        save(get_hash(line_a,nums,past),a)
+        save(get_hash(line_b,nums,past),b)
 
-        reps = 0
-        for i in line:
-            if i != "?":
-                break
-            reps +=1
+        return a + b
+    return 1
 
-        total = 0
-        for pad in range(reps):
-            for i in range(len(nums)):
-                candidates = nums[:i]
-                permutes = get_permute_nums(reps - pad -1, candidates)
-                if permutes != 0:
-                    total += permutes * get_count2(pad * "#" + line[(reps ):], nums[i:], count, ".")
-        return total
-        '''
-        return sum([
-            get_count2("." + line[1:], nums, count, past),
-            get_count2("#" + line[1:], nums, count, past) ])
-        '''
-
-    return count
-
-#print(get_permute_nums(5, [1, 2]))
-
-#exit()
 lines = content.split("\n")
 part1 = 0
+part2 = 0
 for i, line in enumerate(lines):
     chunks = line.split()
-    res = []
-    n =5 
-    s = "?".join( [chunks[0]] * n)  
-    nums = [int(i) for i in chunks[1].split(",") * n]
-    #print(s,nums)
-    count = get_count2(s, nums, 1)
-    print(count)
+    s = chunks[0]
+    nums = [int(i) for i in chunks[1].split(",")]
+    part1 += get_count(s, nums )
+    n = 5 
+    s = "?".join( [s] * n)  
+    nums = nums * 5
+    part2 += get_count(s, nums)
 
-#print(part1)
+print(part1)
+print(part2)
 
 
 
