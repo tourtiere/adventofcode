@@ -5,9 +5,12 @@ branches = [1]
 branch_idx = [0]
 
 for each branch
-    on ??? sequence, get all possible solutions for next ??, considering following ?? sequence
+    on ??? sequence, get all possible solutions for next ??
     find all possible matching indexes set, create branch for them
+    if not possible at all:
+        destroy current branch
     multiply possible match to branch
+    branch: index of num, mais cursor common for all branches
     create 
 '''
 

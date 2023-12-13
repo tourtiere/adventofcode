@@ -56,6 +56,7 @@ for coord in arr:
 seed = (0,0)
 lasts = [seed]
 flood_grid[seed] = True
+
 while len(lasts) != 0:
     new_lasts = []
     for last in lasts:
