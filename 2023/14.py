@@ -50,21 +50,36 @@ def draw_grid(grid):
     for j in range(y_len):
         for i in range(x_len):
             if ((i,j) in grid):
-                print((i,j))
                 s += grid[(i,j)]
             else:
                 s += "."
         s += "\n"
-    print(s)
+    return s
 
 def main():
-    grid = {(i,j):c for j, line in enumerate(lines) for i,c in enumerate(line)}
-    for i in range(3):
-        grid = tilt_grid(grid)
-        grid = transpose(tilt_grid(transpose(grid)))
-        grid = tilt_grid(grid, False)
-        grid = transpose(tilt_grid(transpose(grid ), False))
-        draw_grid(grid)
-    print(evaluate_grid(grid))
+    part1 = 0
+    part2 = 1
+    for part in [part1, part2]:
+        grid = {(i,j):c for j, line in enumerate(lines) for i,c in enumerate(line)}
+        n = 1
+        if part == part2:
+            n = 1000000000
+        cache = {}
+        i = 0
+        while i < n:
+            # print(i)
+            grid = tilt_grid(grid)
+            if part == part2:
+                grid = transpose(tilt_grid(transpose(grid)))
+                grid = tilt_grid(grid, False)
+                grid = transpose(tilt_grid(transpose(grid ), False))
+            c = draw_grid(grid)
+            i+=1
+            if c in cache:
+                cycle_length = (i - cache[c])
+                cycles_to_go = (n - i) // cycle_length
+                i += cycles_to_go * cycle_length
+            cache[c] = i
+        print(evaluate_grid(grid))
 
 main()
