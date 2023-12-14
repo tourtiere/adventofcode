@@ -1,7 +1,3 @@
-from os import terminal_size
-import re
-
-
 content='''#.##..##.
 ..#.##.#.
 ##......#
@@ -41,7 +37,7 @@ def get_reflections_rows(grid)->list[int]:
 def find_diff_refl(grid, prev_refls):
     for i in grid:
         prev = grid[i]
-        grid[i] = replace[prev]
+        grid[i] = { ".":"#","#":"."}[prev]
         refls = get_reflections_rows(grid)
         grid[i] = prev
         if len(refls) > 0 and refls != prev_refls:
@@ -62,10 +58,6 @@ for block in blocks:
     if len(cols_refl) > 0:
         part1 += cols_refl[0]
 
-    replace = {
-        ".":"#",
-        "#":"."
-    }
 
     new_rows_refl = find_diff_refl(grid, rows_refl)
     new_cols_refl = find_diff_refl(transpose(grid), cols_refl)
