@@ -57,19 +57,17 @@ def draw_grid(grid):
     return s
 
 def main():
-    part1 = 0
-    part2 = 1
-    for part in [part1, part2]:
+    for is_part2 in [False, True]:
         grid = {(i,j):c for j, line in enumerate(lines) for i,c in enumerate(line)}
         n = 1
-        if part == part2:
+        if is_part2:
             n = 1000000000
         cache = {}
         i = 0
         while i < n:
             # print(i)
             grid = tilt_grid(grid)
-            if part == part2:
+            if is_part2:
                 grid = transpose(tilt_grid(transpose(grid)))
                 grid = tilt_grid(grid, False)
                 grid = transpose(tilt_grid(transpose(grid ), False))
