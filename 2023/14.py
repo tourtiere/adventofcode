@@ -9,7 +9,7 @@ O.#..O.#.#
 #....###..
 #OO..#....'''
 
-#content = open("./data.txt").read()
+content = open("./data.txt").read()
 lines = content.split("\n")
 
 def transpose(grid):
@@ -65,7 +65,6 @@ def main():
         cache = {}
         i = 0
         while i < n:
-            # print(i)
             grid = tilt_grid(grid)
             if is_part2:
                 grid = transpose(tilt_grid(transpose(grid)))
