@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-from itertools import combinations
-'''
-
-branches = [1]
-branch_idx = [0]
-
-for each branch
-    on ??? sequence, get all possible solutions for next ??
-    find all possible matching indexes set, create branch for them
-    if not possible at all:
-        destroy current branch
-    multiply possible match to branch
-    branch: index of num, mais cursor common for all branches
-    create 
-'''
-
-content = '''???.### 1,1,3
-.??..??...?##. 1,1,3
-?#?#?#?#?#?#?#? 1,3,1,6
-????.#...#... 4,1,1
-????.######..#####. 1,6,5
-?###???????? 3,2,1'''
-
-#content = open("./data.txt").read()
-
-def get_dash_dist(s:str):
-    occ = []
-    for i in s.split("."):
-        if i != "":
-            occ.append(len(i))
-    return occ
-=======
 
 content = open("./data.txt").read()
 
@@ -85,7 +52,6 @@ def get_count(line:str, nums:list[int], past="."):
 
         return a + b
     return 1
->>>>>>> a05250d2940f98449ffa19531d6d2aa7356ca360
 
 lines = content.split("\n")
 part1 = 0
