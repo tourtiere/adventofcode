@@ -1,11 +1,3 @@
-from dataclasses import dataclass
-
-# for each (cell, velocity), find set of n energy block with n {n dependencies}
-# foreach (cell, velocity), update from children
-# repeat
-# Dependencies list 
-# !!  (get n dependencies (can be 1 ou 2 next)) = A get dependencies of A => B , rest = B - A, A= A + B, repeat
-
 content ='''.|...\\....
 |.-.\\.....
 .....|-...
@@ -18,61 +10,74 @@ content ='''.|...\\....
 ..//.|....'''
 content = open("./data.txt").read()
 
-matches = {
-    "\\": lambda x,y: [(y, x)], 
-    "/": lambda x,y: [(-y,-x)],
-    "|": lambda x,y: [(x,y)] if x == 0 else [(0,1), (0,-1)],
-    "-": lambda x,y: [(x,y)] if y == 0 else [(1,0), (-1,0)],
-}
-
 def add(a,b):
     return (a[0] + b[0]), (a[1] + b[1]),
- 
-@dataclass
-class Cell:
-    pos: tuple[int,int]
-    v: tuple[int,int]
-
-cells = [ Cell((0,0), (1,0))]
-visited_positions:set[tuple[int,int]] = {(0,0)}
 
 lines = content.split("\n")
 grid = {(i,j):c for j, line in enumerate(lines) for i,c in enumerate(line)}
 
 
-def draw():
-    R = len(lines)
-    C = len(lines[0])
-    s = ""
-    for j in range(R):
-        for i in range(C):
-            if (i,j) in visited_positions:
-                s += '#'
-            else:
-                print((i,j))
-                s += grid[(i,j)]
-        s += "\n"
-    print(s)
+def get_count(ref_state):
+    states = [ref_state]
+    visited = set()
+    while len(states) != 0:
+        state = states.pop()
+        visited.add(state)
+        pos, v = state
+        cell = grid.get(pos)
+        x, y = v
+        new_vs = [(x,y)]
+        if cell is None:
+            continue
+        if cell == "\\":
+            new_vs = [(y, x)]
+        if cell == "/":
+            new_vs = [(-y, -x)]
+        if cell == "|":
+            if x != 0:
+                new_vs = [(0,1), (0,-1)]
+        if cell == "-":
+            if y != 0:
+                new_vs = [(1,0), (-1,0)]
 
-while len(cells) != 0:
-    # update directions
-    new_cells = []
-    # update directions
-    for cell in cells:
-        cell_value = grid.get(cell.pos)
-        if cell_value is None:
-            continue
-        visited_positions.add(cell.pos)
-        if cell_value == ".":
-            new_cells.append(cell)
-            continue
-        new_vs = matches[cell_value](*cell.v)
         for new_v in new_vs:
-            new_cells.append(Cell(cell.pos, new_v))
+            new_pos = add(pos, new_v)
+            if grid.get(new_pos) is None:
+                continue
+            new_state = (new_pos,new_v)
+            if new_state not in visited:
+                states.append(new_state)
+    return len(set([state[0] for state in visited]))
 
-    new_cells = [Cell(add(cell.pos, cell.v), cell.v) for cell in new_cells]
-    cells = new_cells
-    print(len((visited_positions)))
-    #draw()
+print(get_count(((0,0), (1,0))))
 
-#print(len(visited_positions))
+R = len(lines)
+C = len(lines[0])
+max_value = 0
+
+# from left
+direction = (1,0)
+i = 0 
+for j in range(R):
+    max_value = max(max_value, get_count(((i,j), direction)))
+
+# from top
+direction = (0,1)
+j = 0 
+for i in range(C):
+    max_value = max(max_value, get_count(((i,j), direction)))
+
+# from right
+direction = (-1, 0)
+i = C -1
+for j in range(R):
+    max_value = max(max_value, get_count(((i,j), direction)))
+
+# from bottom
+direction = (-1, 0)
+j = R -1
+for i in range(C):
+    max_value = max(max_value, get_count(((i,j), direction)))
+
+print(max_value)
+
