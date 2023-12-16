@@ -16,13 +16,11 @@ def get_hash(s):
 part1 = [get_hash(i) for i in chunks]
 print(sum(part1))
 
-
 box_txt = defaultdict(list)
 box_len = defaultdict(list)
 
 for chunk in chunks:
-    #print(chunk)
-
+    
     def get_idx(s, h):
         if s in box_txt[h]:
             return box_txt[h].index(s)
