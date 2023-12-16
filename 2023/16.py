@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
-
-# compute n first for each cell and direction couple
+# for each (cell, velocity), find set of n energy block with n {n dependencies}
 # foreach (cell, velocity), update from children
 # repeat
+# Dependencies list 
+# !!  (get n dependencies (can be 1 ou 2 next)) = A get dependencies of A => B , rest = B - A, A= A + B, repeat
 
 content ='''.|...\\....
 |.-.\\.....
