@@ -2,6 +2,7 @@
 - Generate an image based on this problem that must be related to the operations executed on the problem, featuring an elf and Christmas theme.
 
 **Day 1: Historian Hysteria**
+
 ![](./images/day01.jpg)
 
 - **Part 1:** Sort both lists, pair numbers smallest to largest, calculate and sum absolute differences.
