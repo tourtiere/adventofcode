@@ -1,0 +1,1 @@
+for file in *.webp; do convert "$file" -resize 256x256 "${file%.webp}.jpg"; done

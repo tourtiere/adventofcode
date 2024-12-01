@@ -4,6 +4,7 @@ get_input
 **/data-test.txt
 **/test.txt
 
+**/.DS_Store
 
 
 # Byte-compiled / optimized / DLL files
