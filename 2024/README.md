@@ -1,5 +1,5 @@
-- Create a concise summary of the problem and solution, excluding specific numbers and complete sentences, formatted in Markdown."
 - Generate an image based on this problem that must be related to the operations executed on the problem, featuring an elf and Christmas theme.
+- Create a concise summary of the problem and solution, excluding specific numbers and complete sentences, formatted in Markdown.
 
 **Day 1: Historian Hysteria**
 
