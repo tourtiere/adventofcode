@@ -16,7 +16,7 @@
 - Keywords: sequences, validation, adjacent differences, conditional checks
 
 ```
-Generate an image for this problem, with an elf theme.
+Generate an image for this problem, with a christmas and elf theme, in the style of 60s belgium comics.
 ```
 ```
 Create a concise summary, single line, of the problem and solution, excluding specific numbers and complete sentences, formatted in Markdown.
