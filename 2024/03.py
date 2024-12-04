@@ -12,5 +12,5 @@ for a, b, do, dont in lines:
     elif do:
         enable = True
     elif dont:
-        enable= False
+        enable = False
 print(part2)

@@ -15,6 +15,22 @@
 - Solution : Evaluated each report for sequence trends and applied a condition to potentially exclude one outlier to deem a report safe.
 - Keywords: sequences, validation, adjacent differences, conditional checks
 
+**Day 3: Mull It Over**
+
+![](./images/day03.jpg)
+
+- Problem: Parse and evaluate corrupted instructions to sum valid multiplications, considering conditional enable/disable logic.
+- Solution: Use regex to extract valid mul operations, track state changes with do()/don't(), and sum enabled results.
+- Keywords: regex, state management, conditional logic, parsing
+
+**Day 4: Ceres Search**
+
+![](./images/day04.jpg)
+
+- Problem: Count occurrences of "XMAS" in all orientations and identify "X-MAS" patterns in a grid.  
+- Solution: Traverse grid using directional checks to match "XMAS" and intersecting "MAS" sequences.  
+- Keywords: grid traversal, pattern matching, directional search, adjacency checks.
+
 ```
 Generate an image for this problem, with a christmas and elf theme, in the style of 60s belgium comics.
 ```
