@@ -25,7 +25,6 @@ init_pos = [pos for pos, c in grid.items() if c == '^'][0]
 print(compute(init_pos)) # part1
 part2 = 0
 for pos, c in grid.items():
-    print(pos)
     if c == ".": 
         grid[pos] = "#"
         if compute(init_pos) is None:
