@@ -1,5 +1,6 @@
 from __future__ import annotations
 content = open('data.txt').read()
+#content = '2333133121414131402'
 
 def get_blocks():
     nums = [int(i) for i in content]
@@ -16,13 +17,12 @@ def reorder_blocks(blocks, part: int):
         if file_id == None or file_size == 0:
             file_idx -= 1
             continue
+            
         empty_idx = None
         for i, (block_id, block_size) in enumerate(blocks[:file_idx]):
-            if block_id is not None or block_size == 0: continue
-            if part == 2 and block_size < file_size: continue
-            empty_idx = i
-            break
-
+            if (block_id is None and block_size > 0) and (part == 1 or block_size >= file_size):
+                empty_idx = i
+                break
         if empty_idx is None:
             file_idx -= 1
             continue
