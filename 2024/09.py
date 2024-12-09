@@ -1,41 +1,50 @@
+from __future__ import annotations
 content = open('data.txt').read()
-#content = "2333133121414131402"
-nums = [int(i) for i in content]
-blocks = []
 
-for i in range(0, len(nums)):
-    if nums[i] > 0: 
-        blocks.append([i//2 if i % 2 == 0 else None, nums[i]])
+def get_blocks():
+    nums = [int(i) for i in content]
+    blocks = []
+    for i in range(0, len(nums)):
+        if nums[i] > 0: 
+            blocks.append([i//2 if i % 2 == 0 else None, nums[i]])
+    return blocks
 
-idx = 0
-id = 0
-file_size = 0
+def reorder_blocks(blocks, part: int):
+    file_idx = len(blocks) - 1
+    while file_idx >= 0: 
+        file_id, file_size = blocks[file_idx]
+        if file_id == None or file_size == 0:
+            file_idx -= 1
+            continue
+        empty_idx = None
+        for i, (block_id, block_size) in enumerate(blocks[:file_idx]):
+            if block_id is not None or block_size == 0: continue
+            if part == 2 and block_size < file_size: continue
+            empty_idx = i
+            break
 
-while idx < len(blocks): 
-    if blocks[idx][0] != None :
-        idx += 1
-        continue
-    empty_size = blocks[idx][1]
-    if file_size > 0:
+        if empty_idx is None:
+            file_idx -= 1
+            continue
+        empty_size = blocks[empty_idx][1]
         put_size = min(file_size, empty_size)
-        file_size -= put_size
-        blocks[idx]= [id, put_size]
-        if empty_size > put_size:
-            idx += 1 
-            blocks.insert(idx, [None, empty_size - put_size])
-    else:
-        popped = blocks.pop()
-        if popped[0] is not None:
-            id, file_size = popped
+        blocks[empty_idx][1] -= put_size
+        blocks[file_idx][1] -= put_size
+        blocks.insert(file_idx, [None, put_size])
+        blocks.insert(empty_idx, [file_id, put_size])
+        file_idx += 2
 
-blocks[len(blocks)-1][1] += file_size
+    return blocks
 
-res = sum(i ** file_size for i, file_size in blocks)
-idx = 0
-part1 = 0
-for id, file_size in blocks:
-    for i in range(file_size):
-        part1 += idx * id
-        idx +=1
-        
-print(part1)
+def compute_checksum(blocks):
+    idx = 0
+    checksum = 0
+    for file_id, file_size in blocks:
+        file_id = 0 if file_id is None else file_id
+        for _ in range(file_size):
+            checksum += idx * file_id
+            idx += 1
+    return checksum
+
+print(compute_checksum(reorder_blocks(get_blocks(), 1)))
+print(compute_checksum(reorder_blocks(get_blocks(), 2)))
