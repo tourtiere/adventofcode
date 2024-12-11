@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 data = '6 11 33023 4134 564 0 8922422 688775'
 
 def compute(n, max_blink, cache, blink=0):
@@ -20,7 +18,7 @@ def compute(n, max_blink, cache, blink=0):
     return res
 
 part1, part2 = 0, 0
-cache1, cache2 = defaultdict(int), defaultdict(int)
+cache1, cache2 = {}, {}
 
 for s in data.split():
     part1 += compute(int(s), 25, cache1)
