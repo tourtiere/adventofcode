@@ -1,6 +1,4 @@
 import re
-#import math
-from statistics import variance
 
 def next_state(state, size:tuple[int,int]) :
     return [( (x + dx) % size[0], (y + dy) % size[1] , dx, dy) for x,y,dx,dy in state]
@@ -18,23 +16,9 @@ def print_grid(state, size) :
 
 
 def main():
-    content ='''p=0,4 v=3,-3
-    p=6,3 v=-1,-3
-    p=10,3 v=-1,2
-    p=2,0 v=2,-1
-    p=0,0 v=1,3
-    p=3,0 v=-2,-2
-    p=7,6 v=-1,-3
-    p=3,0 v=-1,-2
-    p=9,3 v=2,3
-    p=7,3 v=-1,2
-    p=2,4 v=2,-3
-    p=9,5 v=-3,-3'''
-
     content = open('data.txt').read()
-    size = 11, 7
+    #size = 11, 7
     size = 101, 103
-
     lines = content.split("\n")
 
     init_state = []
