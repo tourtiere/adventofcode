@@ -9,15 +9,13 @@ def can_move(grid, x,y, dx,dy):
     c = grid.get((x,y))
     if c == '.':
         return True
-    elif c == '#':
+    if c == '#':
         return False
-    else:
-        if dx == 0:
-            if c == '[' :
-                return can_move(grid, x+dx,y+dy, dx,dy) and can_move(grid, x+1+dx,y+dy, dx,dy) 
-            if c == ']' :
-                return can_move(grid, x+dx,y+dy, dx,dy) and can_move(grid, x-1+dx,y+dy, dx,dy) 
-        return can_move(grid, x+dx,y+dy, dx,dy)
+    if dx == 0 and c == '[':
+        return can_move(grid, x+dx,y+dy, dx,dy) and can_move(grid, x+1+dx,y+dy, dx,dy) 
+    if dx ==0 and c == ']':
+        return can_move(grid, x+dx,y+dy, dx,dy) and can_move(grid, x-1+dx,y+dy, dx,dy) 
+    return can_move(grid, x+dx,y+dy, dx,dy)
 
 def move(grid, x, y, dx, dy , propagate=True):
     c = grid.get((x,y))
